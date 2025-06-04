@@ -68,7 +68,7 @@ namespace Masuit.Tools.Strings
             if (number < 0)
             {
                 number = -number;
-                result.Add("0");
+                result.Add("-");
             }
 
             long t = number;
@@ -91,8 +91,15 @@ namespace Masuit.Tools.Strings
         /// <returns></returns>
         public long FromString(string str)
         {
+            bool negative = false;
+            if (str.StartsWith("-"))
+            {
+                negative = true;
+                str = str.Substring(1);
+            }
             int j = 0;
-            return new string(str.ToCharArray().Reverse().ToArray()).Where(ch => Characters.Contains(ch)).Sum(ch => Characters.IndexOf(ch) * (long)Math.Pow(Length, j++));
+            long value = new string(str.ToCharArray().Reverse().ToArray()).Where(ch => Characters.Contains(ch)).Sum(ch => Characters.IndexOf(ch) * (long)Math.Pow(Length, j++));
+            return negative ? -value : value;
         }
 
         /// <summary>Returns a string that represents the current object.</summary>
