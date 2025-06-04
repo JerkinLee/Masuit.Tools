@@ -31,6 +31,17 @@ namespace Masuit.Tools.UnitTest
             Assert.Equal(input, output);
         }
 
+        [Theory]
+        [InlineData(10, -10, "-10")]
+        [InlineData(2, -16, "-10000")]
+        public void Can_ConvertNegativeNumber(int bin, long input, string expectOutput)
+        {
+            var nf = new NumberFormater(bin);
+            string output = nf.ToString(input);
+            Assert.Equal(expectOutput, output);
+            Assert.Equal(input, nf.FromString(output));
+        }
+
         [Fact]
         public void Can_ConvertAnyNum2Chinese()
         {
